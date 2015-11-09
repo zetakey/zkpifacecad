@@ -1,0 +1,75 @@
+<!doctype html>
+<!--
+/*
+ * zkpifacecad_helloworld.html
+ *  Example to display "Hello World" to Piface LCD using zkpifacecad.js
+  *  It is part of hardware.js solution from Zetakey
+ *  Author: Jack Wong <jack.wong@zetakey.com>
+ *	Copyright (c) 2015 Zetakey Solutions Limited
+ ************************************************************************
+ *
+ ***********************************************************************
+ */
+-->
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ZKPIFACECAD Hello World Example</title>
+    <script src="zkpifacecad.js"></script>
+<script>
+var pi;
+
+function init(){
+  var fd; // file descriptor
+  pi = zkpifacecad.plugin();
+  fd = pi.pifacecad_open();
+  document.getElementById('fd').innerHTML = fd;
+
+  pi.pifacecad_lcd_backlight_on();
+  pi.pifacecad_lcd_write("Hello World");
+};
+
+function addText(message){
+  pi.pifacecad_lcd_write(message);
+  console.log("pifacecad_lcd_write: "+message);
+};
+
+function updateFullscreen(message){
+	pi.pifacecad_lcd_clear();
+	pi.pifacecad_lcd_home();
+  pi.pifacecad_lcd_write(message);
+  console.log("pifacecad_lcd_write: "+message);
+};
+
+
+</script>
+
+<style>
+	textarea{
+		resize:none;
+	}
+</style>
+</head>
+<body onload="init()">
+  <h1>ZKPIFACECAD</h1>
+  <h3>Hello World Example</h3>
+  <p>File Descriptor: <span id="fd"></span></p>
+  
+  <hr>
+  Add text: <input id="message" type="text" name="message">
+  <input type="submit" value="Show" onclick="addText(document.getElementById('message').value);"></br>
+  <hr>
+  Full screen: </br>
+  <textarea id="fullscreen" rows="2" cols="16" maxlength="32" name="message"></textarea>
+  <input type="submit" value="Show" onclick="updateFullscreen(document.getElementById('fullscreen').value);"></br>
+
+  <hr>
+  
+  <button onclick="pi.pifacecad_lcd_backlight_off();">Backlight OFF</button>
+  <button onclick="pi.pifacecad_lcd_backlight_on();">Backlight ON</button></br>
+
+
+</body>
+
+</html>

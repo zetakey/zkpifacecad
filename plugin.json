@@ -1,0 +1,84 @@
+{
+  "name": "pifacecad",
+  "Content-Type" : "x-zetakey-pifacecad",
+  "extension" : "pifacecad",
+  "description": "Pifacecad Plugin",
+  "version": "0.0.1",
+  "device": "Raspberry Pi 2 Model B",
+  "CPU": "ARM",
+  "OS" : "Linux",
+  "repository": {
+    "type": "git",
+    "url": "http://hwjs.zetakey.com"
+  },
+  "binary":{
+    "url": "http://hwjs.zetakey.com/zkpifacecad/libzkpifacecad.so"
+  },
+  "keywords": [
+    "pifcacecad",
+    "2x16LCD"
+  ],
+  "homepage": "http://hwjs.zetakey.com",
+  "author": "jackccwong@zetakey.com",
+  "license": "MIT",
+  "includepaths" : ["pifacecad/include"],
+  "headerfiles": ["pifacecad.h"],
+  "libpath": ["pifacecad/lib"],
+  "libfiles": ["libpifacecad.a", "libmcp23s17.a"],
+  "functions": {
+    "pifacecad_open" : { "parameters": ["void"], "output" : "int" },
+    "pifacecad_open_noinit" : { "parameters": ["void"], "output" : "int" },
+    "pifacecad_close" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_init" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_read_switches" : { "parameters": ["void"], "output" : "uint8_t" },
+    "pifacecad_read_switch" : { "parameters": ["uint8_t switch_num"], "output" : "uint8_t" },
+    "pifacecad_lcd_write" : { "parameters": ["const char * message"], "output" : "uint8_t" },
+    "pifacecad_lcd_set_cursor" : { "parameters": ["uint8_t col", "uint8_t row"], "output" : "uint8_t" },
+    "pifacecad_lcd_set_cursor_address" : { "parameters": ["uint8_t address"], "output" : "void" },
+    "pifacecad_lcd_get_cursor_address" : { "parameters": ["void"], "output" : "uint8_t" },
+    "pifacecad_lcd_clear" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_home" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_display_on" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_display_off" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_blink_on" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_blink_off" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_cursor_on" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_cursor_off" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_backlight_on" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_backlight_off" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_move_left" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_move_right" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_left_to_right" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_right_to_left" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_autoscroll_on" : { "parameters": ["void"], "output" : "void" },
+    "pifacecad_lcd_autoscroll_off" : { "parameters": ["void"], "output" : "void" },
+
+    "pifacecad_lcd_send_command" : { "parameters": ["uint8_t command"], "output" : "void" },
+    "pifacecad_lcd_send_data" : { "parameters": ["uint8_t data"], "output" : "void" },
+    "pifacecad_lcd_send_byte" : { "parameters": ["uint8_t byte"], "output" : "void" },
+    "pifacecad_lcd_set_rs" : { "parameters": ["uint8_t state"], "output" : "void" },
+    "pifacecad_lcd_set_rw" : { "parameters": ["uint8_t state"], "output" : "void" },
+    "pifacecad_lcd_set_enable" : { "parameters": ["uint8_t state"], "output" : "void" },
+    "pifacecad_lcd_set_backlight" : { "parameters": ["uint8_t state"], "output" : "void" },
+    "pifacecad_lcd_pulse_enable" : { "parameters": ["void"], "output" : "void" },
+    "colrow2address" : { "parameters": ["uint8_t col", "uint8_t row"], "output" : "uint8_t" },
+    "address2col" : { "parameters": ["uint8_t address"], "output" : "uint8_t" },
+    "address2row" : { "parameters": ["uint8_t address"], "output" : "uint8_t" }
+  },
+  "comments": [
+    "array is not supported",
+    "void pifacecad_lcd_write_custom_bitmap(uint8_t location);",
+    "void pifacecad_lcd_store_custom_bitmap(uint8_t location, uint8_t bitmap[]);"
+  ],
+  "definedValues": {
+    "LCD_CLEARDISPLAY" : "0x01",
+    "LCD_RETURNHOME" : "0x02",
+    "LCD_ENTRYMODESET" : "0x04",
+    "LCD_DISPLAYCONTROL" : "0x08",
+    "LCD_CURSORSHIFT" : "0x10",
+    "LCD_FUNCTIONSET" : "0x20",
+    "LCD_SETCGRAMADDR" : "0x40",
+    "LCD_SETDDRAMADDR" : "0x80",
+    "LCD_NEWLINE" : "0xC0"
+  }
+}

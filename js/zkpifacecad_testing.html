@@ -1,0 +1,140 @@
+<!doctype html>
+<!--
+/*
+ * zkpifacecad_helloworld.html
+ *  Example to display "Hello World" to Piface LCD using zkpifacecad.js
+  *  It is part of hardware.js solution from Zetakey
+ *  Author: Jack Wong <jack.wong@zetakey.com>
+ *	Copyright (c) 2015 Zetakey Solutions Limited
+ ************************************************************************
+ *
+ ***********************************************************************
+ */
+-->
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HardwareJS for PiFace Control and Display Functions Testing</title>
+    <script src="zkpifacecad.js"></script>
+<script>
+var pi;
+
+function init(){
+  var fd; // file descriptor
+  pi = zkpifacecad.plugin();
+  fd = pi.pifacecad_open();
+  document.getElementById('fd').innerHTML = fd;
+
+  pi.pifacecad_lcd_backlight_on();
+  pi.pifacecad_lcd_write("PiFace CAD Ready!");
+};
+
+function addText(message){
+  pi.pifacecad_lcd_write(message);
+  console.log("pifacecad_lcd_write: "+message);
+};
+
+function updateFullscreen(message){
+	pi.pifacecad_lcd_clear();
+	pi.pifacecad_lcd_home();
+  pi.pifacecad_lcd_write(message);
+  console.log("pifacecad_lcd_write: "+message);
+};
+
+function read_switch(){
+	var tmp = document.getElementById('switch_id').value;
+	var value = pi.pifacecad_read_switch(Number(tmp));
+	document.getElementById('switch').innerHTML = value;
+};
+
+function setCursorAddress(address){
+  console.log("address = "+ address);
+  pi.pifacecad_lcd_set_cursor_address(Number(address));
+  document.getElementById('cursor_pos').innerHTML = address;
+
+};
+
+function setCursor(x, y){
+  console.log ( "x = " + x + ", y = " + y);
+  var cp = pi.pifacecad_lcd_set_cursor(Number(x), Number(y));
+  document.getElementById('cursor_pos').innerHTML = cp;
+
+};
+
+</script>
+
+<style>
+	textarea{
+		resize:none;
+	}
+</style>
+</head>
+<body onload="init()">
+  <h1>pifacecad - plugin</h1>
+  <h3>Functions Testing</h3>
+
+  <button onclick="var fd = pi.pifacecad_open();document.getElementById('fd').innerHTML = fd;">pifacecad_open</button>
+  <button onclick="var fd = pi.pifacecad_open_noinit();document.getElementById('fd').innerHTML = fd;">pifacecad_open_noinit</button>
+  <button onclick="pi.pifacecad_close();">pifacecad_close</button>
+  <button onclick="pi.pifacecad_lcd_init();">pifacecad_lcd_init</button></br>
+  <p>File Descriptor: <span id="fd"></span></p>
+
+  <hr>
+  Add text: <input id="message" type="text" name="message">
+  <input type="submit" value="Show" onclick="addText(document.getElementById('message').value);"></br>
+  <hr>
+  Full screen: </br>
+  <textarea id="fullscreen" rows="2" cols="16" maxlength="32" name="message"></textarea>
+  <input type="submit" value="Show" onclick="updateFullscreen(document.getElementById('fullscreen').value);"></br>
+
+  <hr>
+
+  Switches: </br>
+
+  Switch number: <input id="switch_id" type="number">
+  <button onclick="read_switch();">Read Switch</button></br>
+  <button onclick="sw = pi.pifacecad_read_switches();document.getElementById('switch').innerHTML = sw;">All switches</button> </br>
+  Value:<span id="switch"></span>
+
+  <hr>
+
+  Cursor: </br>
+  col: <input id="col" type="number" value ="0" >
+  row: <input id="row" type="number" value ="0" >
+  <input type="submit" value="Set Cursor Pos." onclick="setCursor(document.getElementById('col').value, document.getElementById('row').value);" ></br>
+
+  Set Cursor Address: <input id="set_cur_add" type="number" >
+  <input type="submit" value="Set Add." onclick="setCursorAddress(document.getElementById('set_cur_add').value);" ></br>
+
+  Get Cursor Address:
+  <input type="submit" value="Get" onclick="var cp = pi.pifacecad_lcd_get_cursor_address();document.getElementById('cursor_pos').innerHTML = cp;"></br>
+
+  Cursor Pos.:<span id="cursor_pos"></span>
+
+  <hr>
+
+
+  <button onclick="pi.pifacecad_lcd_clear();">pifacecad_lcd_clear</button>
+  <button onclick="pi.pifacecad_lcd_home();">pifacecad_lcd_home</button></br>
+
+  <button onclick="pi.pifacecad_lcd_display_on();">pifacecad_lcd_display_on</button>
+  <button onclick="pi.pifacecad_lcd_display_off();">pifacecad_lcd_display_off</button></br>
+  <button onclick="pi.pifacecad_lcd_blink_on();">pifacecad_lcd_blink_on</button>
+  <button onclick="pi.pifacecad_lcd_blink_off();">pifacecad_lcd_blink_off</button></br>
+  <button onclick="pi.pifacecad_lcd_cursor_on();">pifacecad_lcd_cursor_on</button>
+  <button onclick="pi.pifacecad_lcd_cursor_off();">pifacecad_lcd_cursor_off</button></br>
+  <button onclick="pi.pifacecad_lcd_backlight_off();">pifacecad_lcd_backlight_off</button>
+  <button onclick="pi.pifacecad_lcd_backlight_on();">pifacecad_lcd_backlight_on</button></br>
+  <button onclick="pi.pifacecad_lcd_move_left();">pifacecad_lcd_move_left</button>
+  <button onclick="pi.pifacecad_lcd_move_right();">pifacecad_lcd_move_right</button></br>
+  <button onclick="pi.pifacecad_lcd_left_to_right();">pifacecad_lcd_left_to_right</button>
+  <button onclick="pi.pifacecad_lcd_right_to_left();">pifacecad_lcd_right_to_left</button></br>
+  <button onclick="pi.pifacecad_lcd_autoscroll_on();">pifacecad_lcd_autoscroll_on</button>
+  <button onclick="pi.pifacecad_lcd_autoscroll_off();">pifacecad_lcd_autoscroll_off</button></br>
+
+
+
+</body>
+
+</html>
